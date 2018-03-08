@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-# Copyright (c) 2016
+# Copyright (c) 2018
 # Gmail:liuzheng712
 #
 
@@ -12,7 +12,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-with open('jms-storage/__init__.py', 'r') as fd:
+with open('jms_storage/__init__.py', 'r') as fd:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
                         fd.read(), re.MULTILINE).group(1)
 
@@ -22,7 +22,7 @@ if not version:
 with open('README.md', 'rb') as f:
     readme = f.read().decode('utf-8')
 
-with open('requirements.txt', 'r') as requirements_file:
+with open('jms_storage.egg-info/requires.txt', 'r') as requirements_file:
     requirements = [x.strip() for x in requirements_file.readlines()]
 
 setup(
@@ -35,7 +35,7 @@ setup(
     url='http://www.jumpserver.org/',
     author='Jumpserver team',
     author_email='liuzheng712@gmail.com',
-    packages=['jms-storage'],
+    packages=['jms_storage'],
     include_package_data=True,
     install_requires=requirements,
     platforms='any',

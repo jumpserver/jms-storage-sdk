@@ -1,10 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 import oss2
 
 
-class ali(object):
+class ali:
     def __init__(self, config):
         self.ENDPOINT = config.get("ENDPOINT", None)
         self.BUCKET = config.get("BUCKET", None)
@@ -18,6 +17,9 @@ class ali(object):
             self.client = oss2.Bucket(self.auth, self.ENDPOINT, self.BUCKET)
         else:
             self.client = None
+
+    def type(self):
+        return 'oss'
 
     def upload_file(self, filepath, remote_path):
         try:
