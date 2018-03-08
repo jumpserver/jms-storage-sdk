@@ -4,11 +4,12 @@
 # Gmail:liuzheng712
 #
 
-__version__ = '0.0.8'
+__version__ = '0.0.9'
 
 from .ali import ali
 from .aws import aws
 from .jms import jms
+from .elasticsearch import ESStore
 
 
 def init(config):
