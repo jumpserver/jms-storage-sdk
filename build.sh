@@ -6,5 +6,6 @@
 
 set -ex
 
+pip freeze > requirements.txt
 python setup.py sdist && \
 twine upload dist/*.tar.gz
