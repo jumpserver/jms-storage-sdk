@@ -2,6 +2,7 @@
 env/
 dist/
 test*
+config.py
 jms_storage.egg-info/
 # Byte-compiled / optimized / DLL files
 __pycache__/

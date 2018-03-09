@@ -9,7 +9,7 @@ __version__ = '0.0.9'
 from .ali import ali
 from .aws import aws
 from .jms import jms
-from .elasticsearch import ESStore
+from .es import ESStore
 
 
 def init(config):
