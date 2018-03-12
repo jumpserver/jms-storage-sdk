@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+import os
+
 
 class jms:
     def __init__(self, service):
@@ -10,7 +12,7 @@ class jms:
 
     def upload_file(self, filepath, remote_path):
         try:
-            self.client.push_session_replay(remote_path, filepath)
+            self.client.push_session_replay(filepath, os.path.basename(filepath).split('.')[0])
             return True
         except:
             return False

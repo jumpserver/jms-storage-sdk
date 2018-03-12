@@ -4,7 +4,7 @@
 # Gmail:liuzheng712
 #
 
-__version__ = '0.0.11'
+__version__ = '0.0.12'
 
 from .ali import ali
 from .aws import aws
