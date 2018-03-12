@@ -27,7 +27,7 @@ class aws:
         except:
             return False
 
-    def check_file(self, remote_path):
+    def has_file(self, remote_path):
         try:
             self.client.head_object(Bucket=self.BUCKET, Key=remote_path)
             return True

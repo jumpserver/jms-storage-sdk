@@ -28,7 +28,7 @@ class ali:
         except:
             return False
 
-    def check_file(self, remote_path):
+    def has_file(self, remote_path):
         return self.client.object_exists(remote_path)
 
     def download_file(self, remote_path, locale_path):
