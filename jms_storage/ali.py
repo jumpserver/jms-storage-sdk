@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import oss2
+import os
 
 
 class ali:
@@ -40,6 +41,7 @@ class ali:
 
     def download_file(self, remote_path, locale_path):
         try:
+            os.makedirs(os.path.dirname(locale_path), 0o755)
             self.client.get_object_to_file(remote_path, locale_path)
             return True
         except:

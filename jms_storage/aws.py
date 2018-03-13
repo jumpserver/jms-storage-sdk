@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import boto3
-
+import os
 
 class aws:
     def __init__(self, config):
@@ -36,6 +36,7 @@ class aws:
 
     def download_file(self, remote_path, locale_path):
         try:
+            os.makedirs(os.path.dirname(locale_path), 0o755)
             self.client.download_file(self.BUCKET, remote_path, locale_path)
             return True
         except:
