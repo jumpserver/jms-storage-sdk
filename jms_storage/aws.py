@@ -9,11 +9,13 @@ class aws:
         self.REGION = config.get("REGION", None)
         self.ACCESS_KEY = config.get("ACCESS_KEY", None)
         self.SECRET_KEY = config.get("SECRET_KEY", None)
+        self.ENDPOINT = config.get("ENDPOINT", None)
         if self.ACCESS_KEY and self.REGION and self.SECRET_KEY:
             self.client = boto3.client('s3',
                                        region_name=self.REGION,
                                        aws_access_key_id=self.ACCESS_KEY,
-                                       aws_secret_access_key=self.SECRET_KEY)
+                                       aws_secret_access_key=self.SECRET_KEY,
+                                       endpoint_url=self.ENDPOINT)
         else:
             self.client = boto3.client('s3')
 
