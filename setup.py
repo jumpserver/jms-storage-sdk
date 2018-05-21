@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 # Copyright (c) 2018
-# Gmail:liuzheng712
-#
 
 
 import re
@@ -22,13 +20,13 @@ if not version:
 with open('README.md', 'rb') as f:
     readme = f.read().decode('utf-8')
 
-with open('jms_storage.egg-info/requires.txt', 'r') as requirements_file:
-    requirements = [x.strip() for x in requirements_file.readlines()]
+with open('requirements.txt', 'r') as f:
+    requirements = [x.strip() for x in f.readlines()]
 
 setup(
     name='jms-storage',
     version=version,
-    keywords=['jumpserver', 'storage', 'oss', 's3', 'aws'],
+    keywords=['jumpserver', 'storage', 'oss', 's3', 'elasticsearch'],
     description='Jumpserver storage python sdk tools',
     long_description=readme,
     license='MIT Licence',

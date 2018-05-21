@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 #
-import datetime
+from datetime import datetime, timedelta
 
 import pytz
 from elasticsearch import Elasticsearch
 from elasticsearch.helpers import bulk
 
+from .base import LogStorage
 
-class ESStore:
+
+class ESStorage(LogStorage):
 
     def __init__(self, hosts, index="jumpserver", doc_type="command_store", **kwargs):
         self.hosts = hosts
@@ -23,7 +25,7 @@ class ESStore:
             output=command["output"], session=command["session"],
             timestamp=command["timestamp"]
         )
-        data["date"] = datetime.datetime.fromtimestamp(command['timestamp'], tz=pytz.UTC)
+        data["date"] = datetime.fromtimestamp(command['timestamp'], tz=pytz.UTC)
         return data
 
     def bulk_save(self, command_set, raise_on_error=True):
@@ -42,14 +44,14 @@ class ESStore:
         保存命令到数据库
         """
         data = self.make_data(command)
-        return self.es.index(index=self.index, doc_type=self.doc_type,
-                             body=data)
+        return self.es.index(index=self.index, doc_type=self.doc_type, body=data)
 
-    def get_query_body(self, match=None, exact=None, date_from=None, date_to=None):
+    @staticmethod
+    def get_query_body(match=None, exact=None, date_from=None, date_to=None):
         if date_to is None:
-            date_to = datetime.datetime.now()
+            date_to = datetime.now()
         if date_from is None:
-            date_from = date_to - datetime.timedelta(days=7)
+            date_from = date_to - timedelta(days=7)
 
         time_from = date_from.timestamp()
         time_to = date_to.timestamp()
@@ -106,8 +108,8 @@ class ESStore:
         return data["hits"]
 
     def count(self, date_from=None, date_to=None,
-               user=None, asset=None, system_user=None,
-               input=None, session=None):
+              user=None, asset=None, system_user=None,
+              input=None, session=None):
         match = {}
         exact = {}
 

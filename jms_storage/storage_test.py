@@ -33,14 +33,14 @@ class TestStorageFunc(unittest.TestCase):
 
 
 class TestAWS(TestStorageFunc):
-    client = jms_storage.aws(config.aws_config)
+    client = jms_storage.S3Storage(config.aws_config)
 
     def test_type(self):
         self.assertEqual(self.client.type(), 's3')
 
 
 class TestAli(TestStorageFunc):
-    client = jms_storage.ali(config.ali_config)
+    client = jms_storage.OSSStorage(config.ali_config)
 
     def test_type(self):
         self.assertEqual(self.client.type(), 'oss')

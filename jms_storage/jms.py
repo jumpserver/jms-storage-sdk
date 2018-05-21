@@ -1,28 +1,27 @@
 # -*- coding: utf-8 -*-
 #
 import os
+from .base import ObjectStorage
 
 
-class jms:
+class JMSReplayStorage(ObjectStorage):
     def __init__(self, service):
         self.client = service
 
+    def upload(self, src, target):
+        session_id = os.path.basename(target).split('.')[0]
+        ok = self.client.push_session_replay(src, session_id)
+        return ok, None
+
+    def delete(self, path):
+        pass
+
+    def exists(self, path):
+        pass
+
+    def download(self, src, target):
+        pass
+
+    @property
     def type(self):
         return 'jms'
-
-    def upload_file(self, filepath, remote_path):
-        try:
-            self.client.push_session_replay(filepath, os.path.basename(filepath).split('.')[0])
-            return True
-        except:
-            return False
-
-    def has_file(self, remote_path):
-        return self.client.object_exists(remote_path)
-
-    def download_file(self, remote_path, locale_path):
-        try:
-            self.client.get_object_to_file(remote_path, locale_path)
-            return True
-        except:
-            return False
