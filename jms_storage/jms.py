@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #
 import os
-from .base import ObjectStorage
+from .base import ObjectStorage, LogStorage
 
 
 class JMSReplayStorage(ObjectStorage):
-    def __init__(self, service):
-        self.client = service
+    def __init__(self, config):
+        self.client = config.get("SERVICE")
 
     def upload(self, src, target):
         session_id = os.path.basename(target).split('.')[0]
@@ -14,14 +14,37 @@ class JMSReplayStorage(ObjectStorage):
         return ok, None
 
     def delete(self, path):
-        pass
+        return False, Exception("Not support not")
 
     def exists(self, path):
-        pass
+        return False
 
     def download(self, src, target):
-        pass
+        return False, Exception("Not support not")
 
     @property
     def type(self):
         return 'jms'
+
+
+class JMSCommandStorage(LogStorage):
+    def __init__(self, config):
+        self.client = config.get("SERVICE")
+        if not self.client:
+            raise Exception("Not found app service")
+
+    def save(self, command):
+        return self.client.push_session_command([command])
+
+    def bulk_save(self, command_set, raise_on_error=True):
+        return self.client.push_session_command(command_set)
+
+    def filter(self, date_from=None, date_to=None,
+               user=None, asset=None, system_user=None,
+               input=None, session=None):
+        pass
+
+    def count(self, date_from=None, date_to=None,
+              user=None, asset=None, system_user=None,
+              input=None, session=None):
+        pass

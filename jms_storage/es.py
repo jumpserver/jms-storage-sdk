@@ -11,11 +11,12 @@ from .base import LogStorage
 
 class ESStorage(LogStorage):
 
-    def __init__(self, hosts, index="jumpserver", doc_type="command_store", **kwargs):
-        self.hosts = hosts
-        self.index = index
-        self.doc_type = doc_type
-        self.es = Elasticsearch(hosts=self.hosts, **kwargs)
+    def __init__(self, config):
+        hosts = config.get("HOSTS")
+        kwargs = config.get("OTHER", {})
+        self.index = config.get("INDEX") or 'jumpserver'
+        self.doc_type = config.get("DOC_TYPE") or 'command_store'
+        self.es = Elasticsearch(hosts=hosts, **kwargs)
 
     @staticmethod
     def make_data(command):
