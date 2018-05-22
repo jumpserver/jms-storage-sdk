@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 # Copyright (c) 2018
-
-
 import re
 
 try:
@@ -32,8 +30,9 @@ setup(
     license='MIT Licence',
     url='http://www.jumpserver.org/',
     author='Jumpserver team',
-    author_email='liuzheng712@gmail.com',
+    author_email='support@fit2cloud.com',
     packages=['jms_storage'],
+    data_files=[('requirements', ['requirements.txt'])],
     include_package_data=True,
     install_requires=requirements,
     platforms='any',

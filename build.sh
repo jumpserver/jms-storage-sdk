@@ -5,6 +5,6 @@
 #
 
 set -ex
-[ -d dist ] && rm dist/*
+[ -d dist ] && rm -f dist/* 
 python setup.py sdist && \
 twine upload dist/*.tar.gz
