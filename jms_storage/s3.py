@@ -12,7 +12,7 @@ class S3Storage(ObjectStorage):
         self.region = config.get("REGION", None)
         self.access_key = config.get("ACCESS_KEY", None)
         self.secret_key = config.get("SECRET_KEY", None)
-        self.endpoint = config.get("endpoint", None)
+        self.endpoint = config.get("ENDPOINT", None)
 
         if self.access_key and self.region and self.secret_key:
             self.client = boto3.client(
