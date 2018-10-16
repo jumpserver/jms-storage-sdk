@@ -7,6 +7,7 @@ __version__ = '0.0.18'
 
 from .oss import OSSStorage
 from .s3 import S3Storage
+from .azure import AzureStorage
 from .jms import JMSReplayStorage, JMSCommandStorage
 from .es import ESStorage
 from .multi import MultiObjectStorage
@@ -19,6 +20,8 @@ def get_object_storage(config):
         return OSSStorage(config)
     elif config.get("TYPE") == "server":
         return JMSReplayStorage(config)
+    elif config.get("TYPE") == "azure":
+        return AzureStorage(config)
     else:
         raise Exception("Not found proper storage")
 
