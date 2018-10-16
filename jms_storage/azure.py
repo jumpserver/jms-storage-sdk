@@ -33,7 +33,7 @@ class AzureStorage(ObjectStorage):
 
     def download(self, src, target):
         try:
-            os.makedirs(os.path.dirname(src), 0o755, exist_ok=True)
+            os.makedirs(os.path.dirname(target), 0o755, exist_ok=True)
             self.client.get_blob_to_path(self.container_name, src, target)
             return True, None
         except Exception as e:
