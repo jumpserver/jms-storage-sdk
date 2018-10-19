@@ -40,7 +40,7 @@ class S3Storage(ObjectStorage):
 
     def download(self, src, target):
         try:
-            os.makedirs(os.path.dirname(src), 0o755, exist_ok=True)
+            os.makedirs(os.path.dirname(target), 0o755, exist_ok=True)
             self.client.download_file(self.bucket, src, target)
             return True, None
         except Exception as e:
