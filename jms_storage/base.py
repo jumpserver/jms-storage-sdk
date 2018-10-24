@@ -25,7 +25,7 @@ class ObjectStorage(metaclass=abc.ABCMeta):
         ok, msg = self.upload(src=src, target=target)
         if not ok:
             return False
-        # self.delete(path=target)
+        self.delete(path=target)
         return True
 
 
