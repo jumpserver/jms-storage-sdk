@@ -136,3 +136,9 @@ class ESStorage(LogStorage):
     def all(self):
         """返回所有数据"""
         raise NotImplementedError("Not support")
+
+    def ping(self):
+        try:
+            return self.es.ping()
+        except Exception:
+            return False

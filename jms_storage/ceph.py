@@ -27,11 +27,10 @@ class CEPHStorage(ObjectStorage):
                 is_secure=False,
                 calling_format=boto.s3.connection.OrdinaryCallingFormat(),
             )
-        else:
-            self.conn = None
-        if self.bucket:
+
+        try:
             self.client = self.conn.get_bucket(bucket_name=self.bucket)
-        else:
+        except Exception:
             self.client = None
 
     def upload(self, src, target):
@@ -59,7 +58,10 @@ class CEPHStorage(ObjectStorage):
             return False, e
 
     def exists(self, path):
-        return self.client.get_key(path)
+        try:
+            return self.client.get_key(path)
+        except Exception:
+            return False
 
     @property
     def type(self):
