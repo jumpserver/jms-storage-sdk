@@ -3,10 +3,12 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.17'
+__version__ = '0.0.18'
 
 from .oss import OSSStorage
 from .s3 import S3Storage
+from .azure import AzureStorage
+from .ceph import CEPHStorage
 from .jms import JMSReplayStorage, JMSCommandStorage
 from .es import ESStorage
 from .multi import MultiObjectStorage
@@ -19,6 +21,10 @@ def get_object_storage(config):
         return OSSStorage(config)
     elif config.get("TYPE") == "server":
         return JMSReplayStorage(config)
+    elif config.get("TYPE") == "azure":
+        return AzureStorage(config)
+    elif config.get("TYPE") == "ceph":
+        return CEPHStorage(config)
     else:
         raise Exception("Not found proper storage")
 

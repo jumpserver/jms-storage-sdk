@@ -7,7 +7,7 @@ import abc
 class ObjectStorage(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def upload(self, src, target):
-        pass
+        return None, None
 
     @abc.abstractmethod
     def download(self, src, target):
@@ -20,6 +20,13 @@ class ObjectStorage(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def exists(self, path):
         pass
+
+    def is_valid(self, src, target):
+        ok, msg = self.upload(src=src, target=target)
+        if not ok:
+            return False
+        self.delete(path=target)
+        return True
 
 
 class LogStorage(metaclass=abc.ABCMeta):
