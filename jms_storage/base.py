@@ -4,7 +4,9 @@
 import abc
 
 
-class ObjectStorage(metaclass=abc.ABCMeta):
+class ObjectStorage(object):
+    __metaclass__ = abc.ABCMeta
+
     @abc.abstractmethod
     def upload(self, src, target):
         return None, None
@@ -29,7 +31,9 @@ class ObjectStorage(metaclass=abc.ABCMeta):
         return True
 
 
-class LogStorage(metaclass=abc.ABCMeta):
+class LogStorage(object):
+    __metaclass__ = abc.ABCMeta
+
     @abc.abstractmethod
     def save(self, command):
         pass

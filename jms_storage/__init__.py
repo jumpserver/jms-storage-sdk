@@ -7,7 +7,7 @@ __version__ = '0.0.20'
 
 from .oss import OSSStorage
 from .s3 import S3Storage
-from .azure import AzureStorage
+from .azure_ms import AzureStorage
 from .ceph import CEPHStorage
 from .jms import JMSReplayStorage, JMSCommandStorage
 from .es import ESStorage
