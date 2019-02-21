@@ -3,7 +3,7 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.20'
+__version__ = '0.0.21'
 
 from .oss import OSSStorage
 from .s3 import S3Storage
