@@ -14,15 +14,12 @@ class S3Storage(ObjectStorage):
         self.secret_key = config.get("SECRET_KEY", None)
         self.endpoint = config.get("ENDPOINT", None)
 
-        if self.access_key and self.secret_key:
-            self.client = boto3.client(
-                's3', region_name=self.region,
-                aws_access_key_id=self.access_key,
-                aws_secret_access_key=self.secret_key,
-                endpoint_url=self.endpoint
-            )
-        else:
-            self.client = boto3.client('s3')
+        self.client = boto3.client(
+            's3', region_name=self.region,
+            aws_access_key_id=self.access_key,
+            aws_secret_access_key=self.secret_key,
+            endpoint_url=self.endpoint
+        )
 
     def upload(self, src, target):
         try:
