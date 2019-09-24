@@ -68,6 +68,7 @@ class S3Storage(ObjectStorage):
         buckets = response.get('Buckets', [])
         result = [b['Name'] for b in buckets if b.get('Name')]
         return result
+
     @property
     def type(self):
         return 's3'
