@@ -47,6 +47,10 @@ class OSSStorage(ObjectStorage):
         except Exception as e:
             return False, e
 
+    def list_buckets(self):
+        service = oss2.Service(self.auth,self.endpoint)
+        return ([b.name for b in oss2.BucketIterator(service)])
+
     @property
     def type(self):
         return 'oss'

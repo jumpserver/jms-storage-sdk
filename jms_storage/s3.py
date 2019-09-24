@@ -63,6 +63,10 @@ class S3Storage(ObjectStorage):
         except Exception as e:
             return False, e
 
+    def list_buckets(self):
+        response = self.client.list_buckets()
+        return ([b['Name'] for b in response['Buckets']])
+
     @property
     def type(self):
         return 's3'
