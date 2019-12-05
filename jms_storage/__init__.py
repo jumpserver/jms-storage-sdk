@@ -15,7 +15,7 @@ from .multi import MultiObjectStorage
 
 
 def get_object_storage(config):
-    if config.get("TYPE") == "s3":
+    if config.get("TYPE") in ["s3", "ceph", "swift"]:
         return S3Storage(config)
     elif config.get("TYPE") == "oss":
         return OSSStorage(config)
