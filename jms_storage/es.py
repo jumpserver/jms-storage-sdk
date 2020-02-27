@@ -61,6 +61,7 @@ class ESStorage(LogStorage):
             "query": {
                 "bool": {
                     "must": [],
+                    "must_not": [],
                     "filter": [
                         {"range": {
                             "timestamp": {
@@ -73,12 +74,16 @@ class ESStorage(LogStorage):
             },
             "sort": {
                 "timestamp": {
-                    "order": "desc"
+                    "order": "desc",
                 }
             }
         }
         if match:
             for k, v in match.items():
+                # 默认组织的org_id为""
+                if k == 'org_id' and v == '':
+                    body["query"]["bool"]["must_not"].append({"wildcard": {k: "*"}})
+                    continue
                 body["query"]["bool"]["must"].append({"match": {k: v}})
         if exact:
             for k, v in exact.items():
@@ -87,7 +92,7 @@ class ESStorage(LogStorage):
 
     def filter(self, date_from=None, date_to=None,
                user=None, asset=None, system_user=None,
-               input=None, session=None):
+               input=None, session=None, org_id=None):
 
         match = {}
         exact = {}
@@ -103,6 +108,8 @@ class ESStorage(LogStorage):
             match["session"] = session
         if input:
             match["input"] = input
+        if org_id is not None:
+            match["org_id"] = org_id
 
         body = self.get_query_body(match, exact, date_from, date_to)
         data = self.es.search(index=self.index, doc_type=self.doc_type, body=body)
