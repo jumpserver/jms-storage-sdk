@@ -23,8 +23,8 @@ class ESStorage(LogStorage):
         data = dict(
             user=command["user"], asset=command["asset"],
             system_user=command["system_user"], input=command["input"],
-            output=command["output"], session=command["session"],
-            timestamp=command["timestamp"]
+            output=command["output"], risk_level=command["risk_level"],
+            session=command["session"], timestamp=command["timestamp"]
         )
         data["date"] = datetime.fromtimestamp(command['timestamp'], tz=pytz.UTC)
         return data
@@ -92,7 +92,7 @@ class ESStorage(LogStorage):
 
     def filter(self, date_from=None, date_to=None,
                user=None, asset=None, system_user=None,
-               input=None, session=None, org_id=None):
+               input=None, session=None, risk_level=None, org_id=None):
 
         match = {}
         exact = {}
@@ -110,6 +110,8 @@ class ESStorage(LogStorage):
             match["input"] = input
         if org_id is not None:
             match["org_id"] = org_id
+        if risk_level is not None:
+            match['risk_level'] = risk_level
 
         body = self.get_query_body(match, exact, date_from, date_to)
         data = self.es.search(index=self.index, doc_type=self.doc_type, body=body)
