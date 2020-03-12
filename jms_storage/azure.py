@@ -50,8 +50,8 @@ class AzureStorage(ObjectStorage):
         return self.client.exists(self.container_name, path)
 
     def list_buckets(self):
-        response =  self.client.list_containers()
-        return  ([c.name for c in response.items])
+        response = self.client.list_containers()
+        return ([c.name for c in response.items])
 
     @property
     def type(self):
