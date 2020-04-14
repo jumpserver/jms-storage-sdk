@@ -114,7 +114,12 @@ class ESStorage(LogStorage):
             match['risk_level'] = risk_level
 
         body = self.get_query_body(match, exact, date_from, date_to)
-        data = self.es.search(index=self.index, doc_type=self.doc_type, body=body)
+
+        # Get total count (Because default size=10)
+        data = self.es.search(index=self.index, doc_type=self.doc_type, body=body, size=0)
+        total = data["hits"]["total"]
+
+        data = self.es.search(index=self.index, doc_type=self.doc_type, body=body, size=total)
         return data["hits"]
 
     def count(self, date_from=None, date_to=None,
