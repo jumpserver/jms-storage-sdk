@@ -122,7 +122,8 @@ class ESStorage(LogStorage):
             total = total['value']
 
         if not isinstance(total, int):
-            raise ValueError('Request size type is not int: {} get'.format(type(total)))
+            error = 'Request size type is not int: {} got'.format(type(total))
+            raise ValueError(error)
         data = self.es.search(index=self.index, doc_type=self.doc_type, body=body, size=total)
         return data["hits"]
 
