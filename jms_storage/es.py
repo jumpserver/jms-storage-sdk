@@ -118,7 +118,11 @@ class ESStorage(LogStorage):
         # Get total count (Because default size=10)
         data = self.es.search(index=self.index, doc_type=self.doc_type, body=body, size=0)
         total = data["hits"]["total"]
+        if isinstance(total, dict) and isinstance(total.get('value'), int):
+            total = total['value']
 
+        if not isinstance(total, int):
+            raise ValueError('Request size type is not int: {} get'.format(type(total)))
         data = self.es.search(index=self.index, doc_type=self.doc_type, body=body, size=total)
         return data["hits"]
 
