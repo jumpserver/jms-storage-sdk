@@ -6,6 +6,7 @@
 __version__ = '0.0.31'
 
 from .oss import OSSStorage
+from .obs import OBSStorage
 from .s3 import S3Storage
 from .azure import AzureStorage
 from .ceph import CEPHStorage
@@ -25,6 +26,8 @@ def get_object_storage(config):
         return AzureStorage(config)
     elif config.get("TYPE") == "ceph":
         return CEPHStorage(config)
+    elif config.get("TYPE") == "obs":
+        return OBSStorage(config)
     else:
         raise Exception("Not found proper storage")
 
