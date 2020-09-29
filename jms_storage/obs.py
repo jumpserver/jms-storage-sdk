@@ -12,7 +12,6 @@ class OBSStorage(ObjectStorage):
         self.bucket = config.get("BUCKET", None)
         self.access_key = config.get("ACCESS_KEY", None)
         self.secret_key = config.get("SECRET_KEY", None)
-        print(self.access_key, self.secret_key, self.endpoint)
         if self.access_key and self.secret_key and self.endpoint:
             self.obsClient = ObsClient(access_key_id=self.access_key, secret_access_key=self.secret_key, server=self.endpoint)
         else:
