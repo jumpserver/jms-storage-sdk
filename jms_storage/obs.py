@@ -2,7 +2,7 @@
 #
 import os
 
-from obs import *
+from obs.client import ObsClient
 from .base import ObjectStorage
 
 
