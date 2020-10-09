@@ -24,7 +24,8 @@ class ESStorage(LogStorage):
             user=command["user"], asset=command["asset"],
             system_user=command["system_user"], input=command["input"],
             output=command["output"], risk_level=command["risk_level"],
-            session=command["session"], timestamp=command["timestamp"]
+            session=command["session"], timestamp=command["timestamp"],
+            org_id=command["org_id"]
         )
         data["date"] = datetime.fromtimestamp(command['timestamp'], tz=pytz.UTC)
         return data
