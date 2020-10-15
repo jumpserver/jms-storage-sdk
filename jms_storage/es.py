@@ -147,7 +147,7 @@ class ESStorage(LogStorage):
             match["input"] = input
         body = self.get_query_body(match, exact, date_from, date_to)
         del body["sort"]
-        data = self.es.count(body=body)
+        data = self.es.count(index=self.index, doc_type=self.doc_type, body=body)
         return data["count"]
 
     def __getattr__(self, item):
