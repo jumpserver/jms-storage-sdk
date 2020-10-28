@@ -67,6 +67,15 @@ class FTPStorage(ObjectStorage):
                 return True
             return False
         except:
-            self.client.mkd(remote_dir)
-            self.client.cwd(remote_dir)
+            self.mkdir(remote_dir)
             return False
+
+    def mkdir(self, dir):
+        # 创建多级目录，ftplib不支持一次创建多级目录
+        dir_list = dir.split('/')
+        for d in dir_list:
+            try:
+                self.client.mkd(d)
+            except:
+                pass
+            self.client.cwd(d)
