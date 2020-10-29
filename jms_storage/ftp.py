@@ -10,23 +10,31 @@ class FTPStorage(ObjectStorage):
 
     def __init__(self, config):
         self.host = config.get("HOST", None)
-        self.port = config.get("PORT", 21)
+        self.port = int(config.get("PORT", 21))
         self.username = config.get("USERNAME", None)
         self.password = config.get("PASSWORD", None)
-        self.pasv = config.get("PASV", False)
+        self.pasv = bool(config.get("PASV", False))
         self.dir = config.get("DIR", ".")
         self.client = FTP()
         self.client.encoding = 'utf-8'
         self.client.set_pasv(self.pasv)
+        self.pwd = '.'
         self.connect()
-        self.client.cwd(self.dir)
-        self.pwd = self.client.pwd()
 
     def connect(self, timeout=-999, source_address=None):
         self.client.connect(self.host, self.port, timeout, source_address)
         self.client.login(self.username, self.password)
+        self.client.cwd(self.dir)
+        self.pwd = self.client.pwd()
+
+    def confirm_connected(self):
+        try:
+            self.client.pwd()
+        except Exception:
+            self.connect()
 
     def upload(self, src, target):
+        self.confirm_connected()
         target_dir = os.path.dirname(target)
         exist = self.check_dir_exist(target_dir)
         if not exist:
@@ -41,6 +49,7 @@ class FTPStorage(ObjectStorage):
             return False, e
 
     def download(self, src, target):
+        self.confirm_connected()
         try:
             os.makedirs(os.path.dirname(target), 0o755, exist_ok=True)
             with open(target, 'wb') as f:
@@ -50,6 +59,7 @@ class FTPStorage(ObjectStorage):
             return False, e
 
     def delete(self, path):
+        self.confirm_connected()
         if not self.exists(path):
             raise FileNotFoundError('File not exist error(%s)' % path)
         try:
@@ -68,6 +78,7 @@ class FTPStorage(ObjectStorage):
             return False
 
     def mkdir(self, dirs):
+        self.confirm_connected()
         # 创建多级目录，ftplib不支持一次创建多级目录
         dir_list = dirs.split('/')
         pwd = self.client.pwd()
@@ -92,6 +103,7 @@ class FTPStorage(ObjectStorage):
             self.client.cwd(pwd)
 
     def exists(self, target):
+        self.confirm_connected()
         try:
             self.client.size(target)
             return True
