@@ -14,7 +14,7 @@ class FTPStorage(ObjectStorage):
         self.username = config.get("USERNAME", None)
         self.password = config.get("PASSWORD", None)
         self.pasv = bool(config.get("PASV", False))
-        self.dir = config.get("DIR", ".")
+        self.dir = config.get("DIR", "replay")
         self.client = FTP()
         self.client.encoding = 'utf-8'
         self.client.set_pasv(self.pasv)
@@ -24,6 +24,8 @@ class FTPStorage(ObjectStorage):
     def connect(self, timeout=-999, source_address=None):
         self.client.connect(self.host, self.port, timeout, source_address)
         self.client.login(self.username, self.password)
+        if not self.check_dir_exist(self.dir):
+            self.mkdir(self.dir)
         self.client.cwd(self.dir)
         self.pwd = self.client.pwd()
 
