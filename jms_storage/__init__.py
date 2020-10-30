@@ -3,8 +3,9 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.34'
+__version__ = '0.0.35'
 
+from .ftp import FTPStorage
 from .oss import OSSStorage
 from .s3 import S3Storage
 from .azure import AzureStorage
@@ -25,6 +26,8 @@ def get_object_storage(config):
         return AzureStorage(config)
     elif config.get("TYPE") == "ceph":
         return CEPHStorage(config)
+    elif config.get("TYPE") == "ftp":
+        return FTPStorage(config)
     else:
         raise Exception("Not found proper storage")
 
