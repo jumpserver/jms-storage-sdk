@@ -37,11 +37,16 @@ class MultiObjectStorage(ObjectStorage):
         msg = None
 
         for storage in self.storage_list:
-            if storage.exists(src):
+            try:
+                if not storage.exists(src):
+                    continue
                 ok, msg = storage.download(src, target)
                 if ok:
                     success = True
+                    msg = ''
                     break
+            except:
+                pass
         return success, msg
 
     def delete(self, path):
