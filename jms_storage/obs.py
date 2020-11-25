@@ -13,7 +13,11 @@ class OBSStorage(ObjectStorage):
         self.access_key = config.get("ACCESS_KEY", None)
         self.secret_key = config.get("SECRET_KEY", None)
         if self.access_key and self.secret_key and self.endpoint:
-            self.obsClient = ObsClient(access_key_id=self.access_key, secret_access_key=self.secret_key, server=self.endpoint)
+            proxy_host = os.getenv("proxy_host")
+            proxy_port = os.getenv("proxy_port")
+            proxy_username = os.getenv("proxy_username")
+            proxy_password = os.getenv("proxy_password")
+            self.obsClient = ObsClient(access_key_id=self.access_key, secret_access_key=self.secret_key, server=self.endpoint, proxy_host=proxy_host, proxy_port=proxy_port, proxy_username=proxy_username, proxy_password=proxy_password)
         else:
             self.obsClient = None
 
