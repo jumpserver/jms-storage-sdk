@@ -16,6 +16,9 @@ class ESStorage(LogStorage):
         kwargs = config.get("OTHER", {})
         self.index = config.get("INDEX") or 'jumpserver'
         self.doc_type = config.get("DOC_TYPE") or 'command_store'
+        ignore_verify_certs = kwargs.pop('IGNORE_VERIFY_CERTS', False)
+        if ignore_verify_certs:
+            kwargs['verify_certs'] = None
         self.es = Elasticsearch(hosts=hosts, **kwargs)
 
     @staticmethod
