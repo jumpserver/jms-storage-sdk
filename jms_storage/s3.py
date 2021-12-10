@@ -34,9 +34,9 @@ class S3Storage(ObjectStorage):
     def exists(self, path):
         try:
             self.client.head_object(Bucket=self.bucket, Key=path)
-            return True, None
+            return True
         except Exception as e:
-            return False, e
+            return False
 
     def download(self, src, target):
         try:
