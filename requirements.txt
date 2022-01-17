@@ -9,7 +9,7 @@ elasticsearch==7.8.0
 idna==2.6
 jmespath==0.9.3
 oss2==2.4.0
-python-dateutil==2.6.1
+python-dateutil==2.8.2
 pytz==2018.3
 requests>=2.22.0
 s3transfer==0.5.0
