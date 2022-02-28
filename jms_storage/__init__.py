@@ -3,7 +3,7 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.41'
+__version__ = '0.0.42'
 
 from .ftp import FTPStorage
 from .oss import OSSStorage
@@ -17,7 +17,7 @@ from .multi import MultiObjectStorage
 
 
 def get_object_storage(config):
-    if config.get("TYPE") in ["s3", "ceph", "swift"]:
+    if config.get("TYPE") in ["s3", "ceph", "swift", "cos"]:
         return S3Storage(config)
     elif config.get("TYPE") == "oss":
         return OSSStorage(config)
