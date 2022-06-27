@@ -32,7 +32,7 @@ def get_object_storage(config):
     elif config.get("TYPE") == "obs":
         return OBSStorage(config)
     else:
-        raise Exception("Not found proper storage")
+        return JMSReplayStorage(config)
 
 
 def get_log_storage(config):
@@ -41,7 +41,7 @@ def get_log_storage(config):
     elif config.get("TYPE") == "server":
         return JMSCommandStorage(config)
     else:
-        raise Exception("Not found proper storage")
+        return JMSCommandStorage(config)
 
 
 def get_multi_object_storage(configs):
