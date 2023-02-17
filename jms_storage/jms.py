@@ -40,11 +40,11 @@ class JMSCommandStorage(LogStorage):
         return self.client.push_session_command(command_set)
 
     def filter(self, date_from=None, date_to=None,
-               user=None, asset=None, system_user=None,
+               user=None, asset=None, account=None,
                input=None, session=None):
         pass
 
     def count(self, date_from=None, date_to=None,
-              user=None, asset=None, system_user=None,
+              user=None, asset=None, account=None,
               input=None, session=None):
         pass

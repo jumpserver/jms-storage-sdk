@@ -25,7 +25,7 @@ class ESStorage(LogStorage):
     def make_data(command):
         data = dict(
             user=command["user"], asset=command["asset"],
-            system_user=command["system_user"], input=command["input"],
+            account=command["account"], input=command["input"],
             output=command["output"], risk_level=command["risk_level"],
             session=command["session"], timestamp=command["timestamp"],
             org_id=command["org_id"]
@@ -95,7 +95,7 @@ class ESStorage(LogStorage):
         return body
 
     def filter(self, date_from=None, date_to=None,
-               user=None, asset=None, system_user=None,
+               user=None, asset=None, account=None,
                input=None, session=None, risk_level=None, org_id=None):
 
         match = {}
@@ -105,8 +105,8 @@ class ESStorage(LogStorage):
             exact["user"] = user
         if asset:
             exact["asset"] = asset
-        if system_user:
-            exact["system_user"] = system_user
+        if account:
+            exact["account"] = account
 
         if session:
             match["session"] = session
@@ -132,7 +132,7 @@ class ESStorage(LogStorage):
         return data["hits"]
 
     def count(self, date_from=None, date_to=None,
-              user=None, asset=None, system_user=None,
+              user=None, asset=None, account=None,
               input=None, session=None):
         match = {}
         exact = {}
@@ -141,8 +141,8 @@ class ESStorage(LogStorage):
             exact["user"] = user
         if asset:
             exact["asset"] = asset
-        if system_user:
-            exact["system_user"] = system_user
+        if account:
+            exact["account"] = account
 
         if session:
             match["session"] = session
