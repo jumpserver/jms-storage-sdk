@@ -6,7 +6,7 @@ chardet==3.0.4
 crcmod==1.7
 docutils==0.14
 elasticsearch==7.8.0
-idna==2.6
+idna==2.8
 jmespath==1.0.1
 oss2==2.4.0
 python-dateutil==2.8.2
