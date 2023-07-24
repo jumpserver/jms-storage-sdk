@@ -3,7 +3,7 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.49'
+__version__ = '0.0.50'
 
 from .ftp import FTPStorage
 from .oss import OSSStorage
