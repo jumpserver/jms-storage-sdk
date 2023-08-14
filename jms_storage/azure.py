@@ -3,7 +3,7 @@
 
 import os
 
-from azure.storage.blob import BlockBlobService
+from azure.storage.blob import BlobServiceClient
 
 from .base import ObjectStorage
 
@@ -17,7 +17,7 @@ class AzureStorage(ObjectStorage):
         self.endpoint_suffix = config.get("ENDPOINT_SUFFIX", 'core.chinacloudapi.cn')
 
         if self.account_name and self.account_key:
-            self.client = BlockBlobService(
+            self.client = BlobServiceClient(
                 account_name=self.account_name, account_key=self.account_key,
                 endpoint_suffix=self.endpoint_suffix
             )
