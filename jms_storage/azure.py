@@ -8,50 +8,54 @@ from azure.storage.blob import BlobServiceClient
 from .base import ObjectStorage
 
 
-class AzureStorage(ObjectStorage):
+class AzureStorage(object):
 
-    def __init__(self, config):
+    def __init__(self):
         self.account_name = config.get("ACCOUNT_NAME", None)
         self.account_key = config.get("ACCOUNT_KEY", None)
         self.container_name = config.get("CONTAINER_NAME", None)
         self.endpoint_suffix = config.get("ENDPOINT_SUFFIX", 'core.chinacloudapi.cn')
 
         if self.account_name and self.account_key:
-            self.client = BlobServiceClient(
-                account_name=self.account_name, account_key=self.account_key,
-                endpoint_suffix=self.endpoint_suffix
+            self.service_client = BlobServiceClient(
+                account_url=f'https://{self.account_name}.blob.{self.endpoint_suffix}',
+                credential={'account_name': self.account_name, 'account_key': self.account_key}
             )
+            self.client = self.service_client.get_container_client(self.container_name)
         else:
             self.client = None
 
     def upload(self, src, target):
         try:
-            self.client.create_blob_from_path(self.container_name, target, src)
+            self.client.upload_blob(target, src)
             return True, None
         except Exception as e:
             return False, e
 
     def download(self, src, target):
         try:
-            os.makedirs(os.path.dirname(target), 0o755, exist_ok=True)
-            self.client.get_blob_to_path(self.container_name, src, target)
+            blob_data = self.client.download_blob(blob=src)
+            filepath = os.path.join(target, blob_data.name)
+            os.makedirs(os.path.dirname(filepath), 0o755, exist_ok=True)
+            with open(filepath, 'wb') as writer:
+                writer.write(blob_data.readall())
             return True, None
         except Exception as e:
             return False, e
 
     def delete(self, path):
         try:
-            self.client.delete_blob(self.container_name, path)
+            self.client.delete_blob(path)
             return True, False
         except Exception as e:
             return False, e
 
     def exists(self, path):
-        return self.client.exists(self.container_name, path)
+        resp = self.client.query_blob(name_starts_with=path)
+        return len(list(resp)) != 0
 
     def list_buckets(self):
-        response = self.client.list_containers()
-        return ([c.name for c in response.items])
+        return list(self.service_client.list_containers())
 
     @property
     def type(self):
