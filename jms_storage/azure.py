@@ -8,7 +8,7 @@ from azure.storage.blob import BlobServiceClient
 from .base import ObjectStorage
 
 
-class AzureStorage(object):
+class AzureStorage(ObjectStorage):
 
     def __init__(self):
         self.account_name = config.get("ACCOUNT_NAME", None)
