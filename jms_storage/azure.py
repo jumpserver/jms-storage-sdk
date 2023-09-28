@@ -10,7 +10,7 @@ from .base import ObjectStorage
 
 class AzureStorage(ObjectStorage):
 
-    def __init__(self):
+    def __init__(self, config):
         self.account_name = config.get("ACCOUNT_NAME", None)
         self.account_key = config.get("ACCOUNT_KEY", None)
         self.container_name = config.get("CONTAINER_NAME", None)
