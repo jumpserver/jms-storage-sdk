@@ -51,7 +51,7 @@ class AzureStorage(ObjectStorage):
             return False, e
 
     def exists(self, path):
-        resp = self.client.query_blob(name_starts_with=path)
+        resp = self.client.list_blobs(name_starts_with=path)
         return len(list(resp)) != 0
 
     def list_buckets(self):
