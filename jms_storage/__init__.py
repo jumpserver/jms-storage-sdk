@@ -3,7 +3,7 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.52'
+__version__ = '0.0.53'
 
 from .ftp import FTPStorage
 from .oss import OSSStorage
@@ -14,6 +14,7 @@ from .ceph import CEPHStorage
 from .jms import JMSReplayStorage, JMSCommandStorage
 from .es import ESStorage
 from .multi import MultiObjectStorage
+from .sftp import SFTPStorage
 
 
 def get_object_storage(config):
@@ -31,6 +32,8 @@ def get_object_storage(config):
         return FTPStorage(config)
     elif config.get("TYPE") == "obs":
         return OBSStorage(config)
+    elif config.get("TYPE") == "sftp":
+        return SFTPStorage(config)
     else:
         return JMSReplayStorage(config)
 

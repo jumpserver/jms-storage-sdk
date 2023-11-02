@@ -16,3 +16,4 @@ s3transfer==0.6.1
 six==1.16.0
 azure-storage-blob==12.17.0
 esdk-obs-python==3.21.4
+paramiko==3.2.0
