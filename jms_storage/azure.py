@@ -35,9 +35,8 @@ class AzureStorage(ObjectStorage):
     def download(self, src, target):
         try:
             blob_data = self.client.download_blob(blob=src)
-            filepath = os.path.join(target, blob_data.name)
-            os.makedirs(os.path.dirname(filepath), 0o755, exist_ok=True)
-            with open(filepath, 'wb') as writer:
+            os.makedirs(os.path.dirname(target), 0o755, exist_ok=True)
+            with open(target, 'wb') as writer:
                 writer.write(blob_data.readall())
             return True, None
         except Exception as e:
