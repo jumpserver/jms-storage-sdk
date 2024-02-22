@@ -1,13 +1,12 @@
 name: Publish to PyPI
 
 on:
-  create:
-    tags:
-      - '*'
+  create
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    if: github.event.ref_type == 'tag'
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
