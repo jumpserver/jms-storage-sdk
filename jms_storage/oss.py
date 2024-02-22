@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import os
+import time
 
 import oss2
 
@@ -39,9 +40,21 @@ class OSSStorage(ObjectStorage):
         except Exception as e:
             return False, e
 
+    def restore(self, path):
+        meta = self.client.head_object(path)
+        if meta.resp.headers['x-oss-storage-class'] == oss2.BUCKET_STORAGE_CLASS_ARCHIVE:
+            self.client.restore_object(path)
+            while True:
+                meta = self.client.head_object(path)
+                if meta.resp.headers['x-oss-restore'] == 'ongoing-request="true"':
+                    time.sleep(5)
+                else:
+                    break
+
     def download(self, src, target):
         try:
             os.makedirs(os.path.dirname(target), 0o755, exist_ok=True)
+            self.restore(src)
             self.client.get_object_to_file(src, target)
             return True, None
         except Exception as e:
