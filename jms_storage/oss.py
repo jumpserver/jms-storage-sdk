@@ -31,7 +31,10 @@ class OSSStorage(ObjectStorage):
             return False, e
 
     def exists(self, path):
-        return self.client.object_exists(path)
+        try:
+            return self.client.object_exists(path)
+        except Exception as e:
+            return False
 
     def delete(self, path):
         try:
