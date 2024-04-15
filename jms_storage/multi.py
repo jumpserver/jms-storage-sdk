@@ -62,7 +62,9 @@ class MultiObjectStorage(ObjectStorage):
 
     def exists(self, path):
         for storage in self.storage_list:
-            if storage.exists(path):
-                return True
+            try:
+                if storage.exists(path):
+                    return True
+            except:
+                pass
         return False
-
