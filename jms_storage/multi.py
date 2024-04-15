@@ -54,10 +54,13 @@ class MultiObjectStorage(ObjectStorage):
         msg = None
 
         for storage in self.storage_list:
-            if storage.exists(path):
-                ok, msg = storage.delete(path)
-                if not ok:
-                    success = False
+            try:
+                if storage.exists(path):
+                    ok, msg = storage.delete(path)
+                    if not ok:
+                        success = False
+            except:
+                pass
         return success, msg
 
     def exists(self, path):
