@@ -19,7 +19,11 @@ class MultiObjectStorage(ObjectStorage):
             configs = self.configs
 
         for config in configs:
-            self.storage_list.append(get_object_storage(config))
+            try:
+                storage = get_object_storage(config)
+                self.storage_list.append(storage)
+            except Exception:
+                pass
 
     def upload(self, src, target):
         success = []
