@@ -3,7 +3,7 @@
 # Copyright (c) 2018
 #
 
-__version__ = '0.0.58'
+__version__ = '0.0.59'
 
 from .ftp import FTPStorage
 from .oss import OSSStorage
@@ -12,7 +12,6 @@ from .s3 import S3Storage
 from .azure import AzureStorage
 from .ceph import CEPHStorage
 from .jms import JMSReplayStorage, JMSCommandStorage
-from .es import ESStorage
 from .multi import MultiObjectStorage
 from .sftp import SFTPStorage
 
@@ -36,15 +35,6 @@ def get_object_storage(config):
         return SFTPStorage(config)
     else:
         return JMSReplayStorage(config)
-
-
-def get_log_storage(config):
-    if config.get("TYPE") in ("es", "elasticsearch"):
-        return ESStorage(config)
-    elif config.get("TYPE") == "server":
-        return JMSCommandStorage(config)
-    else:
-        return JMSCommandStorage(config)
 
 
 def get_multi_object_storage(configs):
